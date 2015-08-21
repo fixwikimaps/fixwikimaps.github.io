@@ -82,16 +82,14 @@
     var numInOneScreen = Math.ceil(menu3Width / thumbSize) * Math.ceil(getDocHeight() / thumbSize);
     var numInView = numInOneScreen;
 
-    d3.xhr('https://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', 'text/csv', function(error, response){
-        d3.csv(response.responseURL, function(error, _json){
-            console.log(_json)
-            json = _json;
-            d3.select('.example-count').text("Total number of maps found: " + json.length);
-            buildList(dataTransformMenu1(), '.menu1-container', data1);
-            buildList(dataTransformMenu2('tags'), '.menu2-container', data2);
-           buildList(dataView(dataTransformMenu3('title', 'all'), numInView), '.menu3-container', data3);
-            processLocationHash();
-        })
+    d3.csv('http://cors.io/?u=https://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
+        console.log(_json)
+        json = _json;
+        d3.select('.example-count').text("Total number of maps found: " + json.length);
+        buildList(dataTransformMenu1(), '.menu1-container', data1);
+        buildList(dataTransformMenu2('tags'), '.menu2-container', data2);
+       buildList(dataView(dataTransformMenu3('title', 'all'), numInView), '.menu3-container', data3);
+        processLocationHash();
     });
 
     function dataTransformMenu1(){
