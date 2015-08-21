@@ -83,8 +83,9 @@
     var numInView = numInOneScreen;
 
     d3.xhr('https://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', 'text/csv', function(error, response){
-        // console.log(response)
-        d3.csv(response.responseURL, function(error, _json){
+        console.log(response)
+        d3.csv(response.response, function(error, _json){
+            console.log(_json)
             json = _json;
             d3.select('.example-count').text("Total number of maps found: " + json.length);
             buildList(dataTransformMenu1(), '.menu1-container', data1);
