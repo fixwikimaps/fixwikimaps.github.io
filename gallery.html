@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+    <meta charset=utf-8>
+    <script type="text/javascript" src="d3.v3.js"></script>
+
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+    <link href='http://fonts.googleapis.com/css?family=Monda:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<div class="info"> <img src="./FWM.png" height='50px' width='50px'> <p>FixWikiMaps Gallery | <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform" target="_blank">Submit a map</a> | <a class="about-link" href="">About</a></p></div>
+<div class="about-box">
+
+    <div class="about-close" style="cursor: pointer;">x</div>
+
+    <div class="about-content">
+        <span class="example-count"></span>
+    </br></br>
+        You can contribute maps to this gallery by <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform">submitting them to the form</a>. It won't take but a couple of minutes! <br>
+        Every entry in this gallery is copyrighted by its author.<br>
+        This website was created by <a href='https://briandaviddavidson.com'>Brian Davidson</a> and is based off of the work done by <a href="https://twitter.com/d3visualization">Christophe Viau</a> and <a href="http://www.datameer.com/">Datameer</a>. Styling was also created by <a href='https://briandaviddavidson.com'>Brian Davidson</a> based off work done by <a href="https://twitter.com/mrejfox">@mrejfox</a>.
+
+    </div>
+
+</div>
+<div id="nav">
+    <div class="menu1-container"></div>
+    <div class="menu2-container">
+        <input type="text" class="menu2-search" />
+    </div>
+</div>
+<div id="list">
+    <div class="menu3-container"></div>
+</div>
+
+<script type="text/javascript">
+
+    d3.select('.about-link').on('click', function(d, i){
+        d3.event.preventDefault();
+        d3.select('.about-box').style({display: 'block'});
+    })
+    d3.select('.about-close').on('click', function(d, i){ d3.select('.about-box').style({display: 'none'}); });
+
+    var vizTypeScale = d3.scale.category20c();
+    var splitChar = '; ';
+    var json;
+
+    var data1 = {
+        href: function(d, i){  return '#'+ d.dimension+'=all';},
+        html: function(d, i){ return d.displayName;}
+    };
+
+    var data2 = {
+        href: function(d, i){  return '#'+ d.dimension+'='+d.key; },
+        html: function(d, i){ return d.key+' <span class="value">'+ d.value+'</span>';}
+    };
+
+    var data3 = {
+        href: function(d, i){ return d.url;},
+        html: function(d, i){
+            var content = d.title;
+            if(d.author) content += ' '+'<span class="author">'+d.author+'</span>';
+            if(d.thumbnail) content += '<br /> <img src="'+d.thumbnail+'"" class="thumbnail" target="_blank"/><br />';
+            return content;}
+    };
+
+    function getDocHeight() {
+        var doc = document;
+        return Math.max(
+            doc.body.scrollHeight, doc.documentElement.scrollHeight,
+            doc.body.offsetHeight, doc.documentElement.offsetHeight,
+            doc.body.clientHeight, doc.documentElement.clientHeight
+        );
+    }
+
+    var thumbSize = 250;
+    var menu3Width = parseInt(d3.select('#list').style('width'));
+    var numInOneScreen = Math.ceil(menu3Width / thumbSize) * Math.ceil(getDocHeight() / thumbSize);
+    var numInView = numInOneScreen;
+
+    d3.csv('https://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
+    // d3.csv('d3_gallery.csv', function(error, _json){
+//    d3.csv('d3gallery_feb282013.csv', function(error, _json){
+        json = _json;
+        d3.select('.example-count').text("Total number of maps found: " + json.length);
+        buildList(dataTransformMenu1(), '.menu1-container', data1);
+        buildList(dataTransformMenu2('tags'), '.menu2-container', data2);
+       buildList(dataView(dataTransformMenu3('title', 'all'), numInView), '.menu3-container', data3);
+        processLocationHash();
+    });
+
+    function dataTransformMenu1(){
+        //TODO: change in spreadsheet
+        var dimensionsMap = {author: 'Author', tags: 'Chart type', title: 'Title'};
+        return d3.keys(dimensionsMap).map(function(d, i){return {dimension: d, displayName: dimensionsMap[d]};});
+    }
+
+    function dataTransformMenu2(dimension, filter){
+        var splitted = d3.merge(json.map(function(d, i){
+            return splitter(d[dimension]);
+        }));
+        var filtered = (filter) ? splitted.filter(function(d, i){ return d.toLowerCase().indexOf(filter.toLowerCase()) != -1; }) : splitted;
+        var unemptied = filtered.map(function(d, i){return (d == '') ? 'untagged' : d;});
+        var grouped = groupCount(unemptied);
+        var prepared = d3.entries(grouped).map(function(d, i){
+                d.dimension = dimension;
+                return d;
+            });
+        var sorted = prepared.sort(function(a, b){return b.value - a.value});
+        return sorted;
+    }
+
+    function splitter(data){
+        return (data.indexOf(splitChar) !== -1) ? data.split(splitChar) : data;
+    }
+
+    function groupCount(arr) {
+        var uniques = {}, val;
+        var dups = {};
+        for (var i = 0, len = arr.length; i < len; i++) {
+            val = arr[i];
+            if (val in uniques) {
+                uniques[val]++;
+                dups[val] = uniques[val];
+            } else uniques[val] = 1;
+        }
+//        return(dups);
+        return(uniques);
+    }
+
+    var cachedData;
+    function dataTransformMenu3(dimension, value){
+        var filtered = json.filter(function(d, i){
+            var splitted = splitter(d[dimension]);
+            if (value == 'all') return true;
+            else if(value == 'untagged') return (splitted == '');
+            //TODO: use the grouped data instead
+            else if(splitted.indexOf(value) >= 0) return true;
+            else return false;
+        });
+        var sorted = filtered.sort(function(a, b){
+                return (a.thumbnail == '') - (b.thumbnail == '');
+            });
+        cachedData = sorted;
+        return sorted;
+    }
+
+    function dataView(data, num){
+        return data.slice(0, num);
+    }
+
+    function buildList(data, containerSelector, content){
+        d3.select(containerSelector).selectAll("li.entry").remove();
+        updateList(data, containerSelector, content);
+    }
+
+    function updateList(data, containerSelector, content){
+        var entries = d3.select(containerSelector)
+            .selectAll("li.entry")
+            .data(data)
+            .enter().append("li")
+            .attr('class', 'entry')
+            .append('a')
+            .attr('target', '_blank')
+            .attr('href', content.href)
+            .html(content.html);
+    }
+
+    d3.select('.menu2-search')
+        .on('change', function(d, i){ filterList(this.value); })
+        .on('keyup', function(d, i){ filterList(this.value); });
+    d3.select('body').on('mouseover', function(){
+            if (d3.event.target.nodeName == 'A') d3.select('.menu2-search').node().blur();
+        });
+
+    function filterList(value){
+        var dimension = window.location.hash.substring(1).split('=')[0] || 'tags';
+        buildList(dataTransformMenu2(dimension, value), '.menu2-container', data2);
+    }
+
+    function processLocationHash(){
+        d3.select('#list').node().scrollTop = 0;
+        numInView = numInOneScreen;
+        if(window.location.hash) {
+            var hash = window.location.hash.substring(1);
+            var hashSplit = hash.split('=');
+            if(hashSplit[1] == 'all') buildList(dataTransformMenu2(hashSplit[0]), '.menu2-container', data2);
+            buildList(dataView(dataTransformMenu3(hashSplit[0], hashSplit[1]), numInView), '.menu3-container', data3);
+        }else{
+            buildList(dataView(dataTransformMenu3('title', 'all'), numInView), '.menu3-container', data3);
+        }
+    }
+
+    d3.select(window).on('hashchange', function () {
+        processLocationHash();
+    });
+
+    
+
+    d3.select('#list').on('scroll', function(d, i){
+        if(this.scrollHeight - this.scrollTop <= getDocHeight()){
+            numInView += numInOneScreen;
+            updateList(dataView(cachedData, numInView), '.menu3-container', data3);
+        }
+    });
+
+</script>
+
+</body>
+</html>
