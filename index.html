@@ -18,6 +18,7 @@
     <div class="about-close" style="cursor: pointer; float: right;">x</div>
 
     <div class="about-content">
+        <br>
         <span class="example-count"></span>
     </br></br>
         You can contribute maps to this gallery by <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform">submitting them to the form</a>. It won't take but a couple of minutes! <br>
@@ -94,7 +95,7 @@
 
     function dataTransformMenu1(){
         //TODO: change in spreadsheet
-        var dimensionsMap = {author: 'Author', tags: 'Chart type', title: 'Title'};
+        var dimensionsMap = {author: 'Search by article', tags: 'Search by tags', title: 'Search by name'};
         return d3.keys(dimensionsMap).map(function(d, i){return {dimension: d, displayName: dimensionsMap[d]};});
     }
 
@@ -164,9 +165,18 @@
             .enter().append("li")
             .attr('class', 'entry')
             .append('a')
-            .attr('target', '_blank')
             .attr('href', content.href)
+            .attr('target', function(){
+                console.log(this)
+                if (this.href.indexOf('http') > -1){
+                    return '_blank'
+                } else {
+                    return ''
+                }
+            })
             .html(content.html);
+        
+
     }
 
     d3.select('.menu2-search')
