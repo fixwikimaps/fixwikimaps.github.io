@@ -89,7 +89,7 @@
         d3.select('.example-count').text("Total number of maps found: " + json.length);
         buildList(dataTransformMenu1(), '.menu1-container', data1);
         buildList(dataTransformMenu2('tags'), '.menu2-container', data2);
-       buildList(dataView(dataTransformMenu3('title', 'all'), numInView), '.menu3-container', data3);
+        buildList(dataView(dataTransformMenu3('title', 'all'), numInView), '.menu3-container', data3);
         processLocationHash();
     });
 
@@ -167,7 +167,7 @@
             .append('a')
             .attr('href', content.href)
             .attr('target', function(){
-                console.log(this)
+                //console.log(this)
                 if (this.href.indexOf('http') > -1){
                     return '_blank'
                 } else {
