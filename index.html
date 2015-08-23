@@ -11,19 +11,17 @@
 
 </head>
 <body>
-<div class="info"> <img src="./FWM.png" height='50px' width='50px'> <p>FixWikiMaps Gallery | <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform" target="_blank">Submit a map</a> | <a class="about-link" href="">About</a></p></div>
+<div class="info"> <img src="./FWM.png" height='50px' width='50px'> <p>FixWikiMaps Gallery | <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform" target="_blank">Submit a map</a> | <a href="" target="">Claim a map (Coming soon!)</a> | <a class="about-link" href="">Credits</a> | <span class="example-count"></span> </p></div>
+<!-- Claim a map URL: https://docs.google.com/forms/d/11gYud2UoSF1PY8mM-mYzwK5500uBoxwrCc9JRN8fhzg/viewform -->
 <div class="about-box">
-    <div style="float: left; font-size: 14pt;">About</div>
+    <div style="float: left; font-size: 14pt;">Credits</div>
 
     <div class="about-close" style="cursor: pointer; float: right;">x</div>
 
     <div class="about-content">
         <br>
-        <span class="example-count"></span>
-    </br></br>
-        You can contribute maps to this gallery by <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform">submitting them to the form</a>. It won't take but a couple of minutes! <br>
         Every entry in this gallery is copyrighted by its author.<br>
-        This website was created by <a href='https://briandaviddavidson.com'>Brian Davidson</a> and is based off of the work done by <a href="https://twitter.com/d3visualization">Christophe Viau</a> and <a href="http://www.datameer.com/">Datameer</a>. Styling was also created by <a href='https://briandaviddavidson.com'>Brian Davidson</a> based off work done by <a href="https://twitter.com/mrejfox">@mrejfox</a>.
+        This website was created by <a href='https://briandaviddavidson.com'>Brian Davidson</a> and is based off of the work done by <a href="https://twitter.com/d3visualization">Christophe Viau</a> and <a href="http://www.datameer.com/">Datameer</a>. Styling was also created by <a href="https://twitter.com/mrejfox">@mrejfox</a> and modified by <a href='https://briandaviddavidson.com'>Brian Davidson</a>.
 
     </div>
 
@@ -65,8 +63,14 @@
         html: function(d, i){
             var content = d.title;
             if(d.author) content += ' '+'<span class="author">'+d.author+'</span>';
-            if(d.thumbnail) content += '<br /> <img src="'+d.thumbnail+'"" class="thumbnail" target="_blank"/><br />';
-            return content;}
+
+            if(d.thumbnail){
+             content += '<br /> <img src="'+d.thumbnail+'"" class="thumbnail" target="_blank"/><br />';
+            } else {
+                content += '<br /> <img src="http://fixwikimaps.github.io/FWMNoMap.png" class="thumbnail" target="_blank"/><br />';
+            }
+            return content;
+        }
     };
 
     function getDocHeight() {
