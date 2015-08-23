@@ -170,15 +170,10 @@
             .attr('class', 'entry')
             .append('a')
             .attr('href', content.href)
-            .attr('target', function(){
-                //console.log(this)
-                if (this.href.indexOf('http') > -1){
-                    return '_blank'
-                } else {
-                    return ''
-                }
-            })
             .html(content.html);
+
+        d3.select('.menu3-container').selectAll('li.entry').selectAll('a')
+            .attr('target', '_blank')
         
 
     }
