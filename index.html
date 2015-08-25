@@ -1,12 +1,11 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>FixWikiMaps Gallery</title>
     <meta charset=utf-8>
     <script type="text/javascript" src="d3.v3.js"></script>
-
     <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
-
+    <link rel="shortcut icon" href="FWM.png" />
     <link href='http://fonts.googleapis.com/css?family=Monda:400,700' rel='stylesheet' type='text/css'>
 
 </head>
@@ -67,7 +66,7 @@
             if(d.thumbnail){
              content += '<br /> <img src="'+d.thumbnail+'"" class="thumbnail" target="_blank"/><br />';
             } else {
-                content += '<br /> <img src="http://fixwikimaps.github.io/FWMNoMap.png" class="thumbnail" target="_blank"/><br />';
+                content += '<br /> <img src="./FWMNoMap.png" class="thumbnail" target="_blank"/><br />';
             }
             return content;
         }
@@ -87,7 +86,7 @@
     var numInOneScreen = Math.ceil(menu3Width / thumbSize) * Math.ceil(getDocHeight() / thumbSize);
     var numInView = numInOneScreen;
 
-    d3.csv('http://cors.io/?u=https://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
+    d3.csv('http://crossorigin.me/https://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
         //console.log(_json)
         json = _json;
         d3.select('.example-count').text("Total number of maps found: " + json.length);
