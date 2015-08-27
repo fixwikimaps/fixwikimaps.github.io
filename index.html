@@ -158,7 +158,12 @@
 
     function buildList(data, containerSelector, content){
         d3.select(containerSelector).selectAll("li.entry").remove();
-        updateList(data, containerSelector, content);
+        if (containerSelector == '.menu3-container'){
+            updateMapList(data, containerSelector, content)
+        } else {
+            updateList(data, containerSelector, content);
+        }
+
     }
 
     function updateList(data, containerSelector, content){
@@ -167,6 +172,7 @@
             .data(data)
             .enter().append("li")
             .attr('class', 'entry')
+            // .classed(mapTitle.replace(/\s/g, ''), true)
             .append('a')
             .attr('href', content.href)
             .html(content.html);
@@ -177,6 +183,39 @@
 
     }
 
+    function updateMapList(data, containerSelector, content){
+        // console.log(mapTitle)
+        var entries = d3.select(containerSelector)
+            .selectAll("li.entry")
+            .data(data)
+            .enter().append("li")
+            .attr('class', function(d){
+                for (var i=0; i<data.length; i++){
+                    return d.mapClass + ' entry'
+                }
+            })
+            .append('a')
+            .attr('href', content.href)
+            .html(content.html);
+
+        for (var i=0; i<data.length; i++){
+            if (data[i].claimed === 'Yes'){
+                var firstNode = d3.select('.' + data[i].mapClass)
+                for (var j=0; j<firstNode.length; j++){
+                    console.log(firstNode)
+                }
+                var realNode = d3.select('.' + data[i].mapClass)
+                    realNode.attr('class', 'claimed')
+                    d3.select(realNode).node()
+                        .selectAll('.author')
+                        .text('Claimed by: ' + data[i].name)
+            }
+        }
+
+        d3.select('.menu3-container').selectAll('li.entry').selectAll('a')
+            .attr('target', '_blank')
+
+    }
     d3.select('.menu2-search')
         .on('change', function(d, i){ filterList(this.value); })
         .on('keyup', function(d, i){ filterList(this.value); });

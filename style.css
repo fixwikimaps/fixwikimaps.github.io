@@ -169,5 +169,13 @@ li a:hover {
     background-color: #CCC;
 }
 .example-count{
-	color: darkgreen;
+	color: darkgreen !important;
+}
+
+.claimed{
+    background-color: rgba(102, 102, 102, 0.6);
+}
+
+.claimed > a, span{
+    color: #FFF !important;
 }
