@@ -200,10 +200,6 @@
 
         for (var i=0; i<data.length; i++){
             if (data[i].claimed === 'Yes'){
-                var firstNode = d3.select('.' + data[i].mapClass)
-                for (var j=0; j<firstNode.length; j++){
-                    console.log(firstNode)
-                }
                 var realNode = d3.select('.' + data[i].mapClass)
                     realNode.attr('class', 'claimed')
                     d3.select(realNode).node()
