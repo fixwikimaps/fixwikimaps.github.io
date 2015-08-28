@@ -104,7 +104,7 @@
 
     function dataTransformMenu2(dimension, filter){
         var splitted = d3.merge(json.map(function(d, i){
-            console.log(d)
+            //console.log(d)
             return splitter(d[dimension]);
         }));
         var filtered = (filter) ? splitted.filter(function(d, i){ return d.toLowerCase().indexOf(filter.toLowerCase()) != -1; }) : splitted;
