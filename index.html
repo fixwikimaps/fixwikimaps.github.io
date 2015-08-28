@@ -150,7 +150,8 @@
             }
         });
         var sorted = filtered.sort(function(a, b){
-                return (a.thumbnail == '') - (b.thumbnail == '');
+                return d3.ascending(a.claimed, b.claimed) ||
+                    d3.ascending(a.title, b.title);
             });
         cachedData = sorted;
         return sorted;
