@@ -139,11 +139,15 @@
     function dataTransformMenu3(dimension, value){
         var filtered = json.filter(function(d, i){
             var splitted = splitter(d[dimension]);
-            if (value == 'all') return true;
-            else if(value == 'untagged') return (splitted == '');
-            //TODO: use the grouped data instead
-            else if(splitted.indexOf(value) >= 0) return true;
-            else return false;
+            if (value == 'all') {
+                return true;
+            } else if(value == 'untagged'){
+                return (splitted == '');
+            } else if (splitted.indexOf(value) >= 0){
+                return true;
+            } else{
+                return false;
+            }
         });
         var sorted = filtered.sort(function(a, b){
                 return (a.thumbnail == '') - (b.thumbnail == '');
