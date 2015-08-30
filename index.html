@@ -179,7 +179,7 @@
             .enter().append("li")
             .attr('class', function(d){
                 for (var i=0; i<data.length; i++){
-                    if (d.claimed == "Yes" || d.claimed == 'yes' || d.claimed == 'YES' || d.claimed == 'yEs' || d.claimed == 'yeS'){
+                    if (d.claimed == "Yes" || d.claimed == 'yes' || d.claimed == 'YES' || d.claimed == 'yEs' || d.claimed == 'yeS' || d.claimed == ' Yes' || d.claimed == 'Yes '){
                         return d.mapClass + ' claimed textColor entry'
                     } else {
                         return d.mapClass + ' entry'
