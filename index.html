@@ -191,6 +191,11 @@
             .attr('href', content.href)
             .html(content.html);
 
+        d3.selectAll('li.claimed').select('span.author')
+            .text(function(d){
+                return "Claimed by: " + d.name
+            })
+
         d3.select('.menu3-container').selectAll('li.entry').selectAll('a')
             .attr('target', '_blank')
 
