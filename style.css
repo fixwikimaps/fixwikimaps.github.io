@@ -172,6 +172,10 @@ li a:hover {
 	color: darkgreen;
 }
 
+.claimed-maps{
+    color: darkblue;
+}
+
 .claimed{
     background-color: rgba(102, 102, 102, 0.6);
 }
