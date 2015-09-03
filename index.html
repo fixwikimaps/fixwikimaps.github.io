@@ -87,7 +87,7 @@
     var numInView = numInOneScreen;
     var claimedMaps = 0;
 
-    d3.csv('http://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
+    d3.csv('http://crossorigin.me/http://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
         //console.log(_json)
         json = _json;
         d3.select('.example-count').text("Number of maps found: " + json.length);
