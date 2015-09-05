@@ -106,7 +106,7 @@ li a:hover {
     border: 1px solid white;
     border-radius: 6px;
 }
-.info, .about-box{
+.info, .about-box, .question-box{
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(243, 242, 244, 1.00)), to(rgba(217, 216, 218, 0.75)));
     background-image: -webkit-linear-gradient(top, rgba(243, 242, 244, 1.00), rgba(217, 216, 218, 0.75));
     background-image: -moz-linear-gradient(top, rgba(243, 242, 244, 1.00), rgba(217, 216, 218, 0.75));
@@ -146,6 +146,7 @@ li a:hover {
     padding: 20px;
     display: none;
     z-index: 100;
+    background-color: white;
     -webkit-box-shadow: 0px 5px 18px 0px rgba(5,5,5,0.7); /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
             box-shadow: 0px 5px 18px 0px rgba(5,5,5,0.7); /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
 }
@@ -157,6 +158,42 @@ li a:hover {
     background-color: none;
 }
 .about-close {
+    display: block;
+    position: absolute;
+    right: 18px;
+    border-radius: 4px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    padding-top: 1px;
+    text-align: center;
+    background-color: #CCC;
+}
+.question-box{
+    border: 1px solid silver;
+    border-radius: 2px;
+    word-wrap: break-word;
+    position: absolute;
+    left: 15%;
+    top:9%;
+    width: 45%;
+    max-width: 500px;
+    font-size: 0.8em;
+    line-height: 1.4em;
+    padding: 20px;
+    display: none;
+    z-index: 100;
+    background-color: white;
+    -webkit-box-shadow: 0px 5px 18px 0px rgba(5,5,5,0.7); /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
+            box-shadow: 0px 5px 18px 0px rgba(5,5,5,0.7); /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
+}
+.question-box a:visited {
+    opacity: 1
+};
+.question-content{
+    padding-top: 20px;
+}
+.question-close {
     display: block;
     position: absolute;
     right: 18px;

@@ -10,8 +10,10 @@
 
 </head>
 <body>
-<div class="info"> <img src="./FWM.png" height='50px' width='50px'> <p>FixWikiMaps Gallery | <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform" target="_blank">List a map</a> | <a href="https://docs.google.com/spreadsheets/d/1worOPsQVRD4PoMGyHnXMN3dgU93fwjizVsqhQN8mvPw/edit?usp=sharing" target="_blank">Claim a map</a> | <a class="about-link" href="">Credits</a> | <span class="example-count"></span> | <span class="claimed-maps"></span> </p></div>
+<div class="info"> <img src="./FWM.png" height='50px' width='50px'> <p>FixWikiMaps Gallery | <a href="https://docs.google.com/forms/d/1rg60ypGohs2mSfF8WvtgAZiq2niH9yhh0EoHOYahk-w/viewform" target="_blank">List a map</a> | <a href="https://docs.google.com/spreadsheets/d/1worOPsQVRD4PoMGyHnXMN3dgU93fwjizVsqhQN8mvPw/edit?usp=sharing" target="_blank">Claim a map</a> | <a class="question-link" href="">Contact</a> | <a class="about-link" href="">About</a> | <span class="example-count"></span> | <span class="claimed-maps"></span> </p></div>
 <!-- Old link: https://docs.google.com/forms/d/11gYud2UoSF1PY8mM-mYzwK5500uBoxwrCc9JRN8fhzg/viewform -->
+
+
 <div class="about-box">
     <div style="float: left; font-size: 14pt;">Credits</div>
 
@@ -21,10 +23,25 @@
         <br>
         Every entry in this gallery is copyrighted by its author.<br>
         This website was created by <a href='https://briandaviddavidson.com'>Brian Davidson</a> and is based off of the work done by <a href="https://twitter.com/d3visualization">Christophe Viau</a> and <a href="http://www.datameer.com/">Datameer</a>. Styling was also created by <a href="https://twitter.com/mrejfox">@mrejfox</a> and modified by <a href='https://briandaviddavidson.com'>Brian Davidson</a>.
-
     </div>
 
 </div>
+
+<div class="question-box">
+    <div style="float: left; font-size: 14pt;">Questions? Comments? Concerns?</div>
+
+    <div class="question-close" style="cursor: pointer; float: right;">x</div>
+
+    <div class="question-content">
+        <br>
+        Let us know! Contact us through social media or through our e-mail account.<br><br>
+        Twitter: <a href="https://twitter.com/fixwikimaps" target="_blank"> @fixwikimaps</a><br>
+        Instagram:<a href="https://instagram.com/fixwikimaps" target="_blank"> @fixwikimaps</a><br>
+        Email: <a href="mailto:fixwikimaps@gmail.com?subject=Hello!">fixwikimaps@gmail.com</a>
+    </div>
+
+</div>
+
 <div id="nav">
     <div class="menu1-container"></div>
     <div class="menu2-container">
@@ -40,8 +57,20 @@
     d3.select('.about-link').on('click', function(d, i){
         d3.event.preventDefault();
         d3.select('.about-box').style({display: 'block'});
+        if (d3.select('.question-box').style({display: 'block'})){
+            d3.select('.question-box').style({display: 'none'})
+        }
     })
     d3.select('.about-close').on('click', function(d, i){ d3.select('.about-box').style({display: 'none'}); });
+
+    d3.select('.question-link').on('click', function(d, i){
+        d3.event.preventDefault();
+        d3.select('.question-box').style({display: 'block'});
+        if (d3.select('.about-box').style({display: 'block'})){
+            d3.select('.about-box').style({display: 'none'})
+        }
+    })
+    d3.select('.question-close').on('click', function(d, i){ d3.select('.question-box').style({display: 'none'}); });
 
     var vizTypeScale = d3.scale.category20c();
     var splitChar = '; ';
