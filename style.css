@@ -124,7 +124,7 @@ li a:hover {
     z-index: 101;
 }
 
-.info > img{
+.info > a{
     float:left;
 }
 
