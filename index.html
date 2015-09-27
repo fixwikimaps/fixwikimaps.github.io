@@ -72,6 +72,8 @@
     })
     d3.select('.question-close').on('click', function(d, i){ d3.select('.question-box').style({display: 'none'}); });
 
+    d3.select('#list').classed('loading', true)
+
     var vizTypeScale = d3.scale.category20c();
     var splitChar = '; ';
     var json;
@@ -119,6 +121,7 @@
     d3.csv('http://crossorigin.me/http://docs.google.com/spreadsheets/d/1imknXGpOfszcNjDadgaTzhaXM6jNQdJ_Hiry9n3gp7A/pub?output=csv', function(error, _json){
         //console.log(_json)
         json = _json;
+        d3.select('#list').classed('loading', false)
         d3.select('.example-count').text("Number of maps found: " + json.length);
         for (var i=0; i<json.length; i++){
             if (json[i].claimed == 'Yes'){
