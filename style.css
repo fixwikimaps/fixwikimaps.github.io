@@ -230,5 +230,5 @@ li.textColor > a > span{
 }
 
 .loading{
-    background: #999999 url("spinning-circles.svg") no-repeat center;
+    background: url("spinning-circles.svg") no-repeat center;
 }
