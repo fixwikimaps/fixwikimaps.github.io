@@ -1,0 +1,19 @@
+{
+  "name": "fixwikimaps.github.io",
+  "version": "1.0.0",
+  "description": "FixWikiMaps main website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fixwikimaps/fixwikimaps.github.io.git"
+  },
+  "author": "Brian Davidson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fixwikimaps/fixwikimaps.github.io/issues"
+  },
+  "homepage": "https://github.com/fixwikimaps/fixwikimaps.github.io#readme"
+}
